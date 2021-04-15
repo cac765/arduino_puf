@@ -15,8 +15,18 @@ from utils.puf import PUF
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--log", type=str, default="INFO", 
-        help="Specify logging level for main program.")
+    parser.add_argument("--port", 
+                        type=str,
+                        help="Communication port for PUF",
+                        default="COM4")
+    parser.add_argument("--baudrate", 
+                        type=str,
+                        help="Arduino Serial baud rate",
+                        default="9600")
+    parser.add_argument("--log",
+                        type=str,  
+                        help="Specify logging level for main program.",
+                        default="INFO")
     return parser.parse_args()
 
 def log_config(log_level):
@@ -29,8 +39,13 @@ def log_config(log_level):
 def main():
     args = parse_args()
     log_config(args.log)
-    print("Hello world")
-    pass
+    puf = PUF(port=args.port, baudrate=args.baudrate)
+    sram = puf.load_sram()
+    logging.info(f"SRAM Loaded: \n{sram}")
+    byte_str = puf.format_sram_as_str()
+    logging.info(f"SRAM Byte Str: \n{byte_str}")
+
 
 if __name__ == "__main__":
     main()
+    logging.info("DONE")
