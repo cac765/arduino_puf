@@ -41,10 +41,10 @@ def main():
     args = parse_args()
     log_config(args.log)
     puf = PUF(port=args.port, baudrate=args.baudrate)
-    sram = puf.load_sram()
-    logging.info(f"SRAM Loaded: \n{sram}")
-    byte_str = puf.format_sram_as_str()
-    logging.info(f"SRAM Byte Str: \n{byte_str}")
+    puf.load_sram()
+    logging.debug(f"SRAM Loaded: \n{puf.sram}")
+    logging.debug(f"SRAM Byte Str: \n{puf.sram_str}")
+
 
 def test():
     pass
