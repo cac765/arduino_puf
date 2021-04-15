@@ -1,0 +1,32 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\Debug\asm.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>asm.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>asm.map</FILE>
+  <FILE>asm.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <reset><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>36</LINE></reset>
+  <USART_Init><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>53</LINE></USART_Init>
+  <main><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>83</LINE></main>
+  <USART_Transmit><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>71</LINE></USART_Transmit>
+  <SRAM_Byte><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>88</LINE></SRAM_Byte>
+  <stop><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>97</LINE></stop>
+ </LABELS>
+</ASSEMBLER_INFO>
