@@ -98,5 +98,5 @@ stop:
 	rjmp stop							; Program "End"
 
 
-.EXIT						; tells assembler it's over here!
+.EXIT									; tells assembler it's over here!
 	
