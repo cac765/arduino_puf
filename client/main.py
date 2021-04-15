@@ -10,6 +10,7 @@
 ###############################################################################
 import argparse
 import logging
+import time
 
 from utils.puf import PUF
 
@@ -45,7 +46,10 @@ def main():
     byte_str = puf.format_sram_as_str()
     logging.info(f"SRAM Byte Str: \n{byte_str}")
 
+def test():
+    pass
 
 if __name__ == "__main__":
     main()
+    #test()
     logging.info("DONE")
