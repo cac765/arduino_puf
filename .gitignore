@@ -130,3 +130,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# files unique to this repo
+sram_auth.txt
+sram_key.txt
