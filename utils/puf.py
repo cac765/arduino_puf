@@ -36,7 +36,7 @@ class PUF:
         byte_str = ""
         for index in range(0, self.length):
             byte = self.sram[index]
-            byte = hex(byte)[2:].upper()
+            byte = hex(byte)[2:].upper().zfill(2)
             byte_str += byte
         self.sram_str = byte_str
 

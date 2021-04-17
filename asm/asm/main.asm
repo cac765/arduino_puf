@@ -51,7 +51,7 @@ reset:
 ; initialize the USART
 ;
 USART_Init:
-	ldi r16, 103						; =16MHz / (16 * 9600BAUD) - 1
+	ldi r16, 207						; =16MHz / (16 * 4800BAUD) - 1
 	clr r17								; r16 r17 used to set 9600 baud rate
 
 	sts UBRR0H, r17						; set baud rate

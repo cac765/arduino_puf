@@ -10,7 +10,6 @@
 ###############################################################################
 import argparse
 import logging
-import time
 
 from utils.puf import PUF
 
@@ -24,10 +23,18 @@ def parse_args():
                         type=str,
                         help="Arduino Serial baud rate",
                         default="9600")
+    parser.add_argument("--length",
+                        type=int,
+                        help="Length in Bytes of SRAM PUF.",
+                        default=2048)
     parser.add_argument("--log",
                         type=str,  
                         help="Specify logging level for main program.",
                         default="INFO")
+    parser.add_argument("--save",
+                        type=str,
+                        help="Filename to save SRAM output to.",
+                        default=None)
     return parser.parse_args()
 
 def log_config(log_level):
@@ -40,10 +47,16 @@ def log_config(log_level):
 def main():
     args = parse_args()
     log_config(args.log)
-    puf = PUF(port=args.port, baudrate=args.baudrate)
+    puf = PUF(port=args.port, baudrate=args.baudrate, length=args.length)
     puf.load_sram()
     logging.debug(f"SRAM Loaded: \n{puf.sram}")
     logging.debug(f"SRAM Byte Str: \n{puf.sram_str}")
+
+    if args.save is not None:
+        if puf.save_sram(args.save):
+            logging.debug(f"SRAM appended to file {args.save}.")
+        else:
+            logging.debug(f"Failed to save SRAM to file {args.save}.")
 
 
 def test():

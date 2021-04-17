@@ -51,7 +51,7 @@ reset:
 ; initialize the USART
 ;
 USART_Init:
-	ldi r16, 103						; =16MHz / (16 * 9600BAUD) - 1
+	ldi r16, 207						; =16MHz / (16 * 4800BAUD) - 1
 	clr r17								; r16 r17 used to set 9600 baud rate
 
 	sts UBRR0H, r17						; set baud rate
@@ -93,22 +93,15 @@ USART_Transmit:
 ; main program body
 ;
 main:
-	ldi r26, LOW(0x0100)				; load SRAM start address into upper and lower bytes
-	ldi r27, HIGH(0x0100)
-
-	rcall USART_Receive					; receive a byte on r20 from USART
-	inc r20								; increment r20 to indicate received
-	mov r19, r20						; move data to r19 to be sent
-	rcall USART_Transmit				; transmit byte back through USART
-
-	rcall stop
+	ldi r26, LOW(0x0118)				; load SRAM start address into upper and lower bytes
+	ldi r27, HIGH(0x0118)
 
 
 SRAM_Byte:
 	ld r19, X+							; load value (r19) from SRAM address and increment
 	rcall USART_Transmit				; transmit byte (r19) through USART
 
-	cpi r27, 0x09						; check if X=0x0900 at end of SRAM address
+	cpi r26, 0x22						; check if X=0x0900 at end of SRAM address
 	breq stop							; branch if result zero
 
 	rjmp SRAM_Byte						; otherwise continue
