@@ -74,11 +74,7 @@ def main():
         avg_ber = avg_ham_dist / len(sram_key * 8) * 100
         logging.debug(f"Average Bit Error Rate (BER): %0.2f%%", avg_ber)
 
-def test():
-    print(calculate_hamming_distance("1A", "1B"))
-
 
 if __name__ == "__main__":
     main()
-    #test()
     logging.info("DONE")

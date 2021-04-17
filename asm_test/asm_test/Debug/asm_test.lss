@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm_test\asm_test\main.asm Fri Apr 16 19:08:01 2021
+AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm_test\asm_test\main.asm Sat Apr 17 00:09:33 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -1037,7 +1037,7 @@ AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\a
                                  ; initialize the USART
                                  ;
                                  USART_Init:
-00000b ec0f                      	ldi r16, 207						; =16MHz / (16 * 4800BAUD) - 1
+00000b e008                      	ldi r16, 8						; =16MHz / (16 * 115200BAUD) - 1
 00000c 2711                      	clr r17								; r16 r17 used to set 9600 baud rate
                                  
 00000d 9310 00c5                 	sts UBRR0H, r17						; set baud rate
@@ -1079,15 +1079,15 @@ AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\a
                                  ; main program body
                                  ;
                                  main:
-000026 e1a8                      	ldi r26, LOW(0x0118)				; load SRAM start address into upper and lower bytes
-000027 e0b1                      	ldi r27, HIGH(0x0118)
+000026 e0a0                      	ldi r26, LOW(0x0100)				; load SRAM start address into upper and lower bytes
+000027 e0b1                      	ldi r27, HIGH(0x0100)
                                  
                                  
                                  SRAM_Byte:
 000028 913d                      	ld r19, X+							; load value (r19) from SRAM address and increment
 000029 dff5                      	rcall USART_Transmit				; transmit byte (r19) through USART
                                  
-00002a 32a2                      	cpi r26, 0x22						; check if X=0x0900 at end of SRAM address
+00002a 30b9                      	cpi r27, 0x09						; check if X=0x0900 at end of SRAM address
 00002b f009                      	breq stop							; branch if result zero
                                  
 00002c cffb                      	rjmp SRAM_Byte						; otherwise continue
@@ -1116,7 +1116,7 @@ counted separately from r26..r31 here.
 x  :   1 y  :   0 z  :   0 r0 :   0 r1 :   2 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
 r13:   0 r14:   0 r15:   0 r16:  10 r17:   2 r18:   0 r19:   2 r20:   1 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   2 r27:   1 r28:   2 
+r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   1 r27:   2 r28:   2 
 r29:   2 r30:   0 r31:   0 
 Registers used: 10 out of 35 (28.6%)
 

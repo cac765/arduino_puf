@@ -1,7 +1,7 @@
 /*==================================================================
  | Project: ASSIGNMENT NUMBER AND TITLE
  |
- | Author: STUDENT’S NAME HERE
+ | Author: STUDENT?S NAME HERE
  + -----------------------------------------------------------------
  |
  | Description: DESCRIBE THE PROBLEM THAT THIS PROGRAM WAS WRITTEN  
@@ -51,7 +51,7 @@ reset:
 ; initialize the USART
 ;
 USART_Init:
-	ldi r16, 207						; =16MHz / (16 * 4800BAUD) - 1
+	ldi r16, 8							; =16MHz / (16 * 115200BAUD) - 1
 	clr r17								; r16 r17 used to set 9600 baud rate
 
 	sts UBRR0H, r17						; set baud rate
@@ -62,6 +62,18 @@ USART_Init:
 
 	ldi r16, (1<<USBS0) | (3<<UCSZ00)	; set frame format
 	sts  UCSR0C, r16					; 8 data bits, no parity, 2 stop bits
+	ret
+
+
+;=======================
+; receive a byte over serial wire
+; byte received is stored in r20
+USART_Receive:
+	lds r16, UCSR0A						; wait for receive complete flag
+	sbrs r16, RXC0
+	rjmp USART_Receive
+
+	lds r20, UDR0						; store data from buffer in r20
 	ret
 
 

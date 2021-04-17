@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument("--baudrate", 
                         type=str,
                         help="Arduino Serial baud rate",
-                        default="9600")
+                        default="115200")
     parser.add_argument("--length",
                         type=int,
                         help="Length in Bytes of SRAM PUF.",
