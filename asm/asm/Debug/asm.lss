@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm Fri Apr 16 18:06:38 2021
+AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm Sat Apr 17 01:08:10 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -987,7 +987,7 @@ AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\a
                                  
                                   | Project: ASSIGNMENT NUMBER AND TITLE
                                   |
-                                  | Author: STUDENT’S NAME HERE
+                                  | Author: STUDENT?S NAME HERE
                                   + -----------------------------------------------------------------
                                   |
                                   | Description: DESCRIBE THE PROBLEM THAT THIS PROGRAM WAS WRITTEN  
@@ -1030,14 +1030,14 @@ AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\a
                                  
 000008 d002                      	rcall USART_Init					; initialize serial communications
 000009 9478                      	sei									; enable global interrupts
-00000a c014                      	rjmp main
+00000a c01b                      	rjmp main
                                  
                                  
                                  ;=======================
                                  ; initialize the USART
                                  ;
                                  USART_Init:
-00000b ec0f                      	ldi r16, 207						; =16MHz / (16 * 4800BAUD) - 1
+00000b e008                      	ldi r16, 8							; =16MHz / (16 * 115200BAUD) - 1
 00000c 2711                      	clr r17								; r16 r17 used to set 9600 baud rate
                                  
 00000d 9310 00c5                 	sts UBRR0H, r17						; set baud rate
@@ -1052,36 +1052,48 @@ AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\a
                                  
                                  
                                  ;=======================
+                                 ; receive a byte over serial wire
+                                 ; byte received is stored in r20
+                                 USART_Receive:
+000018 9100 00c0                 	lds r16, UCSR0A						; wait for receive complete flag
+00001a ff07                      	sbrs r16, RXC0
+00001b cffc                      	rjmp USART_Receive
+                                 
+00001c 9140 00c6                 	lds r20, UDR0						; store data from buffer in r20
+00001e 9508                      	ret
+                                 
+                                 
+                                 ;=======================
                                  ; send a byte over serial wire
                                  ; byte to send is in r19
                                  USART_Transmit:
-000018 9100 00c0                 	lds r16, UCSR0A						; wait for empty transmit buffer
-00001a ff05                      	sbrs r16, UDRE0						
-00001b cffc                      	rjmp USART_Transmit
+00001f 9100 00c0                 	lds r16, UCSR0A						; wait for empty transmit buffer
+000021 ff05                      	sbrs r16, UDRE0						
+000022 cffc                      	rjmp USART_Transmit
                                  
-00001c 9330 00c6                 	sts UDR0, r19						; put data (r19) into buffer, sends the data
-00001e 9508                      	ret
+000023 9330 00c6                 	sts UDR0, r19						; put data (r19) into buffer, sends the data
+000025 9508                      	ret
                                  
                                  
                                  ;=======================
                                  ; main program body
                                  ;
                                  main:
-00001f e0a0                      	ldi r26, LOW(0x0100)				; load SRAM start address into upper and lower bytes
-000020 e0b1                      	ldi r27, HIGH(0x0100)
+000026 e0a0                      	ldi r26, LOW(0x0100)				; load SRAM start address into upper and lower bytes
+000027 e0b1                      	ldi r27, HIGH(0x0100)
                                  
                                  
                                  SRAM_Byte:
-000021 913d                      	ld r19, X+							; load value (r19) from SRAM address and increment
-000022 dff5                      	rcall USART_Transmit				; transmit byte (r19) through USART
+000028 913d                      	ld r19, X+							; load value (r19) from SRAM address and increment
+000029 dff5                      	rcall USART_Transmit				; transmit byte (r19) through USART
                                  
-000023 30b9                      	cpi r27, 0x09						; check if X=0x0900 at end of SRAM address
-000024 f009                      	breq stop							; branch if result zero
+00002a 30b9                      	cpi r27, 0x09						; check if X=0x0900 at end of SRAM address
+00002b f009                      	breq stop							; branch if result zero
                                  
-000025 cffb                      	rjmp SRAM_Byte						; otherwise continue
+00002c cffb                      	rjmp SRAM_Byte						; otherwise continue
                                  
                                  stop:
-000026 cfff                      	rjmp stop							; Program "End"
+00002d cfff                      	rjmp stop							; Program "End"
                                  
                                  
 
@@ -1103,10 +1115,10 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   1 y  :   0 z  :   0 r0 :   0 r1 :   2 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   8 r17:   2 r18:   0 r19:   2 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:  10 r17:   2 r18:   0 r19:   2 r20:   1 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   1 r27:   2 r28:   2 
 r29:   2 r30:   0 r31:   0 
-Registers used: 9 out of 35 (25.7%)
+Registers used: 10 out of 35 (28.6%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
@@ -1119,12 +1131,12 @@ clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   2 cls   :   0
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   1 cpse  :   0 dec   :   0 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   1 
-ld    :   1 ldd   :   0 ldi   :   7 lds   :   1 lpm   :   0 lsl   :   0 
+ld    :   1 ldd   :   0 ldi   :   7 lds   :   3 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   3 pop   :   0 
-push  :   0 rcall :   2 ret   :   2 reti  :   0 rjmp  :   4 rol   :   0 
+push  :   0 rcall :   2 ret   :   3 reti  :   0 rjmp  :   5 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   1 sec   :   0 seh   :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   2 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   5 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
@@ -1133,7 +1145,7 @@ Instructions used: 14 out of 113 (12.4%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00004e     78      0     78   32768   0.2%
+[.cseg] 0x000000 0x00005c     92      0     92   32768   0.3%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

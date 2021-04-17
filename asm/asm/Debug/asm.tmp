@@ -24,9 +24,10 @@
  <LABELS>
   <reset><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>36</LINE></reset>
   <USART_Init><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>53</LINE></USART_Init>
-  <main><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>83</LINE></main>
-  <USART_Transmit><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>71</LINE></USART_Transmit>
-  <SRAM_Byte><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>88</LINE></SRAM_Byte>
-  <stop><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>97</LINE></stop>
+  <main><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>95</LINE></main>
+  <USART_Receive><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>71</LINE></USART_Receive>
+  <USART_Transmit><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>83</LINE></USART_Transmit>
+  <SRAM_Byte><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>100</LINE></SRAM_Byte>
+  <stop><FILE>C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm</FILE><LINE>109</LINE></stop>
  </LABELS>
 </ASSEMBLER_INFO>

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm Fri Apr 16 18:06:38 2021
+AVRASM ver. 2.2.8  C:\Users\Skrub\Documents\NAU\2021S\INF639\Projects\Project3\arduino_puf\asm\asm\main.asm Sat Apr 17 01:08:10 2021
 
 
 EQU  SIGNATURE_000 0000001e
@@ -697,7 +697,8 @@ EQU  SPMRaddr     00000032
 EQU  INT_VECTORS_SIZE 00000034
 CSEG reset        00000002
 CSEG USART_Init   0000000b
-CSEG main         0000001f
-CSEG USART_Transmit 00000018
-CSEG SRAM_Byte    00000021
-CSEG stop         00000026
+CSEG main         00000026
+CSEG USART_Receive 00000018
+CSEG USART_Transmit 0000001f
+CSEG SRAM_Byte    00000028
+CSEG stop         0000002d
