@@ -11,7 +11,7 @@
 import argparse
 import logging
 
-from utils.puf import PUF
+from client.puf import PUF
 
 def parse_args():
     parser = argparse.ArgumentParser()
