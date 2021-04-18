@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument("--threshold",
                         type=int,
                         help="Mismatch threshold to filter from SRAM.",
-                        default=3)
+                        default=2)
     return parser.parse_args()
 
 def log_config(log_level: str):
