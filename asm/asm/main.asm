@@ -1,24 +1,24 @@
 /*==================================================================
- | Project: ASSIGNMENT NUMBER AND TITLE
+ | Project: INF639 Project 3
  |
- | Author: STUDENT?S NAME HERE
+ | Author: Corey Cline
  + -----------------------------------------------------------------
  |
- | Description: DESCRIBE THE PROBLEM THAT THIS PROGRAM WAS WRITTEN  
- |              TO SOLVE.
+ | Description: Assembly program to dump all SRAM data onto Serial
+ |				using ATMEGA328p Arduino board.
  |
- | Input: DESCRIBE THE INPUT THAT THE PROGRAM REQUIRES.
+ | Input: None, runs on boot
  |
- | Output: DESCRIBE THE OUTPUT THAT THE PROGRAM PRODUCES.
+ | Output: SRAM Data from memory address 0x0100 to 0x08FF
  |
- | Algorithm: OUTLINE THE APPROACH USED BY THE PROGRAM TO SOLVE THE
- | PROBLEM.
+ | Algorithm: Initialize USART and RAM begin, send bytes one at a
+ |			  time and increment address until reach end, then jmp
+ |			  to infinite loop to stop sending serial but keeping
+ |			  data buffer open.
  |
- | Required Features Not Included: DESCRIBE HERE ANY REQUIREMENTS OF
- | THE ASSIGNMENT THAT THE PROGRAM DOES NOT ATTEMPT TO SOLVE.
+ | Required Features Not Included: None
  |
- | Known Bugs: IF THE PROGRAM DOES NOT FUNCTION CORRECTLY IN SOME
- | SITUATIONS, DESCRIBE THE SITUATIONS AND PROBLEMS HERE.
+ | Known Bugs: None
  |
  *================================================================*/  
 
