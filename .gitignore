@@ -133,6 +133,7 @@ dmypy.json
 .pyre/
 
 # files unique to this repo
+.vs/
 sram_*.txt
 sram_*.txt
 *.csv
