@@ -133,5 +133,6 @@ dmypy.json
 .pyre/
 
 # files unique to this repo
-sram_auth.txt
-sram_key.txt
+sram_auth.*.txt
+sram_key.*.txt
+*.csv
