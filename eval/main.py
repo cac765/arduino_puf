@@ -15,7 +15,7 @@
 import argparse
 import logging
 
-from utils.eval_utils import calculate_hamming_distance
+from eval.eval_utils import Eval
 
 def parse_args():
     """Parses program optional arguments."""
@@ -32,6 +32,14 @@ def parse_args():
                         type=str,
                         help="Name of the SRAM data file to authenticate.",
                         default="sram_auth.txt")
+    parser.add_argument("--output",
+                        type=str,
+                        help="Name of output file for mismatch errors.",
+                        default="error_data.csv")
+    parser.add_argument("--threshold",
+                        type=int,
+                        help="Mismatch threshold to filter from SRAM.",
+                        default=3)
     return parser.parse_args()
 
 def log_config(log_level: str):
@@ -43,36 +51,49 @@ def log_config(log_level: str):
         format="%(levelname)s: %(message)s")
 
 def main():
+    # Parse args, get log, create evaluator
     args = parse_args()
     log_config(args.log)
-    try:
-        with open(args.key_file, "r") as file:
-            sram_key = file.readlines()[0]
-        with open(args.auth_file, "r") as file:
-            sram_auth = file.readlines()
+    evaluate = Eval()
+
+    # Get hex string data from SRAM Files
+    sram_key = Eval.load_data_from_file(args.key_file)[0]
+    sram_auth = Eval.load_data_from_file(args.auth_file)
+    if sram_key is None or sram_auth is None:
+        exit(1)
     
-    except FileNotFoundError as fnfe:
-        logging.error(fnfe)
-        logging.info(f"Bad filename. Exiting...")
-        exit(1)
-
-    except Exception as err:
-        logging.error(err)
-        logging.info(f"Error parsing keys. Exiting...")
-        exit(1)
-
+    # Evaluate hamming distances and average bit error rate
     if len(sram_auth) > 0:
-        total_ham_dist = 0
-        for auth in sram_auth:
-            ham_dist = calculate_hamming_distance(sram_key, auth)
-            total_ham_dist += ham_dist
-            logging.debug(f"Hamming Distance: {ham_dist}")
-        
-        avg_ham_dist = total_ham_dist / len(sram_auth)
-        logging.debug(f"Average Hamming Distance: {avg_ham_dist}")
+        avg_ber = Eval.calculate_avg_ber(sram_key, sram_auth, log=logging)
 
-        avg_ber = avg_ham_dist / len(sram_key * 8) * 100
-        logging.debug(f"Average Bit Error Rate (BER): %0.2f%%", avg_ber)
+    # Track mismatched bytes and occurrences
+    evaluate.track_total_mismatch(sram_key, sram_auth)
+    total_mismatch = evaluate.get_total_mismatch()
+    logging.debug(f"Total bit errors: {len(total_mismatch)}")
+
+    # Save mismatches to CSV
+    evaluate.export_to_csv(args.output)
+    logging.info(f"Error data saved to {args.output}.")
+
+    # Filter mismatched bytes from sram data
+    logging.info(f"Filtering byte errors with threshold {args.threshold}...")
+    sram_key_filtered = evaluate.filter_hex_mismatch(sram_key, args.threshold)
+    logging.debug(f"Length of filtered key: {len(sram_key_filtered)}")
+    sram_auth_filtered = []
+    for auth in sram_auth:
+        auth_filtered = evaluate.filter_hex_mismatch(auth, args.threshold)
+        sram_auth_filtered.append(auth_filtered)
+
+    # Calculate new average Bit Error Rate
+    new_avg_ber = evaluate.calculate_avg_ber(sram_key_filtered, 
+                                             sram_auth_filtered,
+                                             log=logging)
+
+    # Save filtered SRAM data to file
+    Eval.save_data_to_file([sram_key_filtered], 
+                            "sram_key_filtered.txt")
+    Eval.save_data_to_file(sram_auth_filtered, 
+                            "sram_auth_filtered.txt")
 
 
 if __name__ == "__main__":
