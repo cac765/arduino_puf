@@ -99,6 +99,22 @@ class Eval:
         new_hex = new_hex.translate({ord("X") : None})
         return new_hex
 
+    def load_mismatch_from_csv(self, filename: str) -> bool:
+        """Load total mismatches from .csv file."""
+        try:
+            in_data = pd.read_csv(filename, header=0, names=["addr", "freq"])
+            result = {}
+            
+            for key, val in zip(in_data["addr"], in_data["freq"]):
+                result[key] = val
+
+            self.total_mismatch = result
+            return True
+
+        except Exception as err:
+            print(f"[ERROR]: Error loading file {filename}.")
+            return False
+
     def track_single_mismatch(self, hex_1: str, hex_2: str) -> list:
         """XOR two hex strings and track the locations of mismatched chars."""
         mismatches = []
