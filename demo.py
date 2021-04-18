@@ -93,10 +93,9 @@ def main():
             ham_dist = Eval.calculate_hamming_distance(sram_partial_key,
                 sram_partial_auth)
             logging.info(f"Hamming Distance: {ham_dist}")
-
-        ber = Eval.calculate_avg_ber(sram_partial_key, 
-            [sram_partial_auth],
-            log=logging)     
+            Eval.calculate_avg_ber(sram_partial_key, 
+                [sram_partial_auth], 
+                log=logging)
 
 
 if __name__ == "__main__":
