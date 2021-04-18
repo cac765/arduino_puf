@@ -32,7 +32,7 @@ def parse_args():
     parser.add_argument("--threshold",
                         type=int,
                         help="Mismatch threshold to filter from SRAM.",
-                        default=2)
+                        default=1)
     parser.add_argument("--key-file",
                         type=str,
                         help="filename of the SRAM Key file.",
