@@ -109,6 +109,7 @@ class Eval:
 
     def track_total_mismatch(self, key: str, auth_list: list):
         """Track the total occurrences of mismatches from the key."""
+        self.total_mismatch = {}
         for auth in auth_list:
             mismatches = self.track_single_mismatch(key, auth)
             # iterate through list of single mismatch case

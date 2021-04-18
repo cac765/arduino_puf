@@ -15,7 +15,7 @@
 import argparse
 import logging
 
-from eval.eval_utils import Eval
+from eval.eval import Eval
 
 def parse_args():
     """Parses program optional arguments."""
@@ -88,6 +88,15 @@ def main():
     new_avg_ber = evaluate.calculate_avg_ber(sram_key_filtered, 
                                              sram_auth_filtered,
                                              log=logging)
+
+    # Track filtered mismatched bytes and occurrences
+    evaluate.track_total_mismatch(sram_key_filtered, sram_auth_filtered)
+    total_mismatch_filtered = evaluate.get_total_mismatch()
+    logging.debug(f"Total bit errors: {len(total_mismatch_filtered)}")
+
+    # Save filtered mismatches to CSV
+    evaluate.export_to_csv("error_data_filtered.csv")
+    logging.info(f"Error data saved to {'error_data_filtered.csv'}.")
 
     # Save filtered SRAM data to file
     Eval.save_data_to_file([sram_key_filtered], 
