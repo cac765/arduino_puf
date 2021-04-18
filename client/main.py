@@ -59,10 +59,6 @@ def main():
             logging.debug(f"Failed to save SRAM to file {args.save}.")
 
 
-def test():
-    pass
-
 if __name__ == "__main__":
     main()
-    #test()
     logging.info("DONE")
